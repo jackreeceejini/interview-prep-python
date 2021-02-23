@@ -73,6 +73,25 @@ def random_sampling(k, A):
         A[i], A[r] = A[r], A[i]
     return A
 
+def compute_random_permutation(n):
+    permutation = list(range(n))
+    random_sampling(n, permutation)
+    return permutation
+
+
+def random_subset(n, k):
+    changed_elements = {}
+    for i in range(k):
+        # Generate a random index between i and n - 1, inclusive
+        rand_idx = random.randrange(i, n)
+        rand_idx_mapped = changed_elements.get(rand_idx, rand_idx)
+        i_mapped = changed_elements.get(i, i)
+        changed_elements[rand_idx] = i_mapped
+        changed_elements[i] = rand_idx
+    return [changed_elements[i] for i in range(k)]
+
+
+
 if __name__ == "__main__":
-    print(random_sampling(5, list(range(10))))
+    print(random_subset(9,5))
     
