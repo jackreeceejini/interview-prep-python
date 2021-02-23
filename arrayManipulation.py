@@ -3,6 +3,8 @@ Some array manipulations
 
 """
 import random
+import bisect
+import itertools
 
 def even_odd(A):
     next_even, next_odd = 0, len(A) - 1
@@ -91,7 +93,14 @@ def random_subset(n, k):
     return [changed_elements[i] for i in range(k)]
 
 
+def nonuniform_random_number_generation(values, probabilities):
+    prefix_sum_of_probabilities = list(itertools.accumulate(probabilities))
+    interval_idx = bisect.bisect(prefix_sum_of_probabilities, random.random())
+    return values[interval_idx]
+
+
 
 if __name__ == "__main__":
-    print(random_subset(9,5))
+    for i in range(5):
+        print(nonuniform_random_number_generation([3,5,7,11], [9/18,6/18,2/18,1/18] ))
     
