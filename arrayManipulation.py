@@ -116,10 +116,16 @@ def matrix_in_spiral_order(square_matrix):
         x, y = next_x, next_y
     return spiral_ordering
 
+def generate_pascal_triangle(n):
+    result = [[1] * (i + 1) for i in range(n)]
+    for i in range(n):
+        for j in range(1, i):
+            # sets this entry to the sum of the tow above adjacent entries
+            result[i][j] = result[i - 1][j - 1] + result[i - 1][j]
+    return result 
+
 
 
 if __name__ == "__main__":
-    matrix = [[1,2,3],[4,5,6],[7,8,9]]
-
-    print(matrix_in_spiral_order(matrix))
+    print(generate_pascal_triangle(6))
     
