@@ -28,5 +28,20 @@ def string_to_int(s):
     s[s[0] == '-':],0) * (-1 if s[0] == '-' else 1)
 
 
+def convert_base(num_as_string, b1, b2):
+    """
+    Covert a number given as a string from one base (b1) to another (b2)
+    """
+    def construct_from_base(num_as_int, base):
+        return ('' if num_as_int == 0 else
+            construct_from_base(num_as_int // base, base) + 
+            string.hexdigits[num_as_int % base].upper())
+
+    is_negative = num_as_string[0] == '-'
+    num_as_int = functools.reduce(lambda x, c: x * b1 + string.hexdigits.index(c.lower()),
+        num_as_string[is_negative:], 0)
+    return ('-' if is_negative else '') + ('0' if num_as_int == 0 else 
+        construct_from_base(num_as_int, b2))
+
 if __name__ == "__main__":
-    print(string_to_int(int_to_string(123)) == 123)
+    print(convert_base('12422',13,14))
