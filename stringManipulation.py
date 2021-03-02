@@ -4,6 +4,7 @@ Solutions to string manipulation problems
 
 import string
 import functools
+import itertools
 
 def is_palindromic(s):
     return all(s[i] == s[~i] for i in range(len(s)//2))
@@ -43,5 +44,11 @@ def convert_base(num_as_string, b1, b2):
     return ('-' if is_negative else '') + ('0' if num_as_int == 0 else 
         construct_from_base(num_as_int, b2))
 
+def look_and_say_pythonic(n):
+    s = '1'
+    for _ in range(n - 1):
+        s = ''.join(str(len(list(group))) + key for key, group in itertools.groupby(s))
+    return s 
+
 if __name__ == "__main__":
-    print(convert_base('12422',13,14))
+    print(look_and_say_pythonic(6))
