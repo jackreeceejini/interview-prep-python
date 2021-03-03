@@ -99,6 +99,39 @@ def rle_decoding(s):
     return ''.join([j*int(i) for i, j in zip(s[::2],s[1::2])]) 
 
 
+def rabin_karp(t, s):
+    """Rabin karp substring search
+    """
+
+    if len(s) > len(t):
+        return -1 # s is not a substring of t
+    BASE = 26
+    # Hash codes for the substring of t and s
+    t_hash = functools.reduce(lambda h, c: h * BASE + ord(c), t[:len(s)], 0)
+    s_hash = functools.reduce(lambda h, c: h * BASE + ord(c), s, 0)
+    power_s = BASE**max(len(s)-1, 0)
+    counter = 0
+
+    for i in range(len(s), len(t)):
+        # checks the two substrings are actually equal or not to protect
+        # against hash collision
+        if t_hash == s_hash and t[i - len(s):i] == s:
+            return i - len(s) # found a match
+
+        # uses rolling hash to compute the hash code
+        t_hash -= ord(t[i - len(s)]) * power_s
+        t_hash = t_hash * BASE + ord(t[i])
+        counter += 1
+        print(counter)
+    
+    # Tries to match s and t[-len(s):]
+    if t_hash == s_hash and t[-len(s):] == s:
+        return len(t) - len(s)
+    counter += 1
+    print(counter)
+    return -1 # s is not a substring of t
+
 if __name__ == "__main__":
-    s = 'aaaabcccaa'
-    print(rle_decoding(rle_encoding(s)) == s)
+    t = 'aaaaaaaaaa'
+    s = 'aaaaab'
+    print(rabin_karp(t,s))
