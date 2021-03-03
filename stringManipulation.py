@@ -86,5 +86,19 @@ def get_valid_ip_address(s):
                             result.append('.'.join(parts))
     return result
 
+def rle_encoding(s):
+    """
+    use run length encoding to compress string s
+    """
+    return ''.join([str(len(list(g))) + str(e) for e, g in itertools.groupby(s)])
+
+def rle_decoding(s):
+    """
+    decode a string s encoded by rle_encoding(s)
+    """
+    return ''.join([j*int(i) for i, j in zip(s[::2],s[1::2])]) 
+
+
 if __name__ == "__main__":
-    print(get_valid_ip_address('19216811'))
+    s = 'aaaabcccaa'
+    print(rle_decoding(rle_encoding(s)) == s)
