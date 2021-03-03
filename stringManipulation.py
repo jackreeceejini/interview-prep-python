@@ -46,7 +46,7 @@ def convert_base(num_as_string, b1, b2):
 
 def look_and_say_pythonic(n):
     """
-    n is a digit from 1 to max Integer
+    n is a number from 1 to max Integer
     """
     s = '1'
     for _ in range(n - 1):
@@ -63,5 +63,28 @@ def roman_to_integer(s):
         lambda val, i: val + (-T[s[i]] if T[s[i]] < T[s[i + 1]] else T[s[i]]),
         reversed(range(len(s) - 1)), T[s[-1]])
 
+def get_valid_ip_address(s):
+    """
+    s is a string of integer digits from which all
+    valid ip addresses will be generated
+    
+    e.g. 19216811 -> 192.168.1.1
+    """
+    def is_valid_part(s):
+        # '00', '000', '01', etc. are not valid, but '0' is valid.
+        return len(s) == 1 or (s[0] != '0' and int(s) <= 255)
+    result, parts = [], [None] * 4
+    for i in range(1, min(4, len(s))):
+        parts[0] = s[:i]
+        if is_valid_part(parts[0]):
+            for j in range(1, min(len(s) - i, 4)):
+                parts[1] = s[i:i+j]
+                if is_valid_part(parts[1]):
+                    for k in range(1, min(len(s) - i - j, 4)):
+                        parts[2], parts[3] = s[i + j:i + j + k],s[i + j + k:]
+                        if is_valid_part(parts[2]) and is_valid_part(parts[3]):
+                            result.append('.'.join(parts))
+    return result
+
 if __name__ == "__main__":
-    print(roman_to_integer('IC'))
+    print(get_valid_ip_address('19216811'))
