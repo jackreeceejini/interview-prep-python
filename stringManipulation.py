@@ -45,12 +45,18 @@ def convert_base(num_as_string, b1, b2):
         construct_from_base(num_as_int, b2))
 
 def look_and_say_pythonic(n):
+    """
+    n is a digit from 1 to max Integer
+    """
     s = '1'
     for _ in range(n - 1):
         s = ''.join(str(len(list(group))) + key for key, group in itertools.groupby(s))
     return s 
 
 def roman_to_integer(s):
+    """
+    s is a string made up of roman numerals
+    """
     T = {'I' : 1, 'V' : 5, 'X': 10, 'L':50, 'C': 100, 'D': 500, 'M': 1000}
 
     return functools.reduce(
