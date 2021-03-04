@@ -39,3 +39,16 @@ def merge_two_sorted_lists(L1, L2):
     # append remaining nodes of L1 or L2
     tail.next = L1 or L2
     return dummy_head.next 
+
+
+def reverse_sublist(L, start, finish):
+    dummy_head = sublist_head = ListNode(0, L)
+    for _ in range(1, start):
+        sublist_head = sublist_head.next 
+
+    # Reverses sublist
+    sublist_iter = sublist_head.next 
+    for _ in range(finish - start):
+        temp = sublist_iter.next
+        sublist_iter.next, temp.next, sublist_head.next = (temp.next, sublist_head.next, temp)
+    return dummy_head.next
