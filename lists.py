@@ -52,3 +52,32 @@ def reverse_sublist(L, start, finish):
         temp = sublist_iter.next
         sublist_iter.next, temp.next, sublist_head.next = (temp.next, sublist_head.next, temp)
     return dummy_head.next
+
+
+
+def has_cycle(head):
+    """
+    Checks if a linkedlist has a cycle
+    """
+    def cycle_len(end):
+        start, step = end, 0
+        while True:
+            step += 1
+            start = start.next
+            if start is end:
+                return step
+    fast = slow = head
+    while fast and fast.next and fast.next.next:
+        slow, fast = slow.next, fast.next.next
+        if slow is fast:
+            # finds the start of the cycle
+            cycle_len_advanced_iter = head 
+            for _ in range(cycle_len(slow)):
+                cycle_len_advanced_iter = cycle_len_advanced_iter.next
+            it = head 
+            # Both iterators advance in tandem
+            while it is not cycle_len_advanced_iter:
+                it = it.next
+                cycle_len_advanced_iter = cycle_len_advanced_iter.next
+            return it # iter is the start of cycle
+    return None # No cycle
