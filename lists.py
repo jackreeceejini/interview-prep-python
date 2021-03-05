@@ -1,6 +1,6 @@
 
 class ListNode:
-    def __init__(self, data=None, next_node=None):
+    def __init__(self, data=0, next_node=None):
         self.data = data
         self.next = next_node
 
@@ -160,4 +160,10 @@ def cyclic_shift_right(L, k):
     new_tail.next = None
     return new_head 
     
+
+def even_odd_merge(L):
+    if not L:
+        return L
+
+    even_dummy_head, odd_dummy_head = ListNode(0), ListNode(0)
         
