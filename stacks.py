@@ -38,11 +38,22 @@ class Stack:
         self._element_with_cached_max.append(self.ElementWithCachedMax(x, x if self.empty() else max(
             x, self.max())))
 
+def evaluate(RPN_expression):
+    """
+    Evaluate arithmetic expression written in 
+    reverse polish notation (RPN)
+
+    """
+    DELIMITER = ','
+    OPERATORS = {'+': lambda x, y : x + y, '-': lambda x, y: x - y, '*': lambda x, y: x * y, '/' : lambda x, y : int(x/y)}
+    intermediate_results = []
+    for element in RPN_expression.split(DELIMITER):
+        if element in OPERATORS:
+            intermediate_results.append(OPERATORS[element](intermediate_results.pop(), intermediate_results.pop()))
+        else:
+            intermediate_results.append(int(element))
+    return intermediate_results[-1]
+
 
 if __name__ == '__main__':
-    items = [2,3,5,2,3,7,4,3,2]
-    s = Stack()
-    for item in items:
-        s.push(item)
-    print(s.max())
-    
+    print(evaluate("3,4,+,2,*,1,+"))
