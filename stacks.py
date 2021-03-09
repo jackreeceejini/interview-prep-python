@@ -54,6 +54,21 @@ def evaluate(RPN_expression):
             intermediate_results.append(int(element))
     return intermediate_results[-1]
 
+def balanced(inputString):
+    """
+    checks if inputString is a balance sequence of 
+    parentheses, brackets or braces
+    inputString  = '((][{{}}])'
+    """
+    leftParens, lookup = [], { '(' : ')', '[' : ']', '{' : '}'}
+    for c in inputString:
+        if c in lookup:
+            leftParens.append(c)
+        elif not leftParens or lookup[leftParens.pop()] != c:
+            # Unmatched right paren
+            return False
+    return not leftParens
+
 
 if __name__ == '__main__':
     print(evaluate("3,4,+,2,*,1,+"))
