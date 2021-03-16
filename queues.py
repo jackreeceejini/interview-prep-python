@@ -36,7 +36,7 @@ def binary_tree_depth_order(tree):
 class Queue1:
     """
     A queue a more sophisticated queue whose 
-    total size increase according to how full it is
+    total size increases according to how full it is
     """
     SCALE_FACTOR = 2
 
@@ -67,3 +67,22 @@ class Queue1:
         return self._num_queue_elements 
 
     
+class Queue2:
+    """Building a queue using stacks
+    """
+
+    def __init__(self) -> None:
+        self._enq, self._deq = [], []
+
+    def enqueue(self, x):
+        self._enq.append(x)
+
+    def dequeue(self):
+        if not self._deq:
+            # Transfers the elements in _enq to _deq
+            while self._enq:
+                self._deq.append(self._enq.pop())
+        if not self._deq: # _deq is still empty
+            raise IndexError('empty queue')
+        return self._deq.pop()
+        
