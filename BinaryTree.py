@@ -93,3 +93,23 @@ def has_path_sum(tree, remaining_weight):
     # non leaf
     return (has_path_sum(tree.left, remaining_weight - tree.data) or 
     has_path_sum(tree.right, remaining_weight - tree.data))
+
+def inorder_traversal(tree):
+    """
+    Perform inorder traversal of a binary tree
+    without recursion
+    """
+    s, result = [], []
+
+    while s or tree:
+        if tree:
+            s.append(tree)
+            # going left
+            tree = tree.left
+        else:
+            # going up
+            tree = s.pop()
+            result.append(tree.data)
+            # going right
+            tree = tree.right
+    return result
