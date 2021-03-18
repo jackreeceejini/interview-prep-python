@@ -83,4 +83,13 @@ def sum_root_to_leaf(tree, partial_path_sum=0):
     if not tree.left and not tree.right: #leaf
         return partial_path_sum
     return (sum_root_to_leaf(tree.left, partial_path_sum) + sum_root_to_leaf(tree.right, partial_path_sum))
+
+def has_path_sum(tree, remaining_weight):
+    if not tree:
+        return False
+    if not tree.left and not tree.right: #leaf
+        return remaining_weight == tree.data
     
+    # non leaf
+    return (has_path_sum(tree.left, remaining_weight - tree.data) or 
+    has_path_sum(tree.right, remaining_weight - tree.data))
