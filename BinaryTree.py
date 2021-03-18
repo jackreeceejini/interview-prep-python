@@ -113,3 +113,17 @@ def inorder_traversal(tree):
             # going right
             tree = tree.right
     return result
+
+def preorder_traversal(tree):
+    """
+    return preorder_traversal without recursion
+    """
+    path, result = [tree], []
+
+    while path:
+        curr = path.pop()
+        if curr:
+            result.append(curr.data)
+            curr += [curr.right, curr.left]
+    return result
+
