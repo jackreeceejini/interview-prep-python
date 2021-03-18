@@ -128,7 +128,7 @@ def preorder_traversal(tree):
     return result
 
 def find_kth_node_binary_tree(tree, k):
-    while Tree:
+    while tree:
         left_size = tree.left.size if tree.left else 0
         if left_size + 1 < k: # k-th node must be in right subtree of tree
             k -= left_size + 1
@@ -140,5 +140,5 @@ def find_kth_node_binary_tree(tree, k):
 
     return None # if k is between 1 and the tree size, this is unreacheable
 
-    
+
 
