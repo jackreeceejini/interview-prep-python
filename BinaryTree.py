@@ -211,3 +211,24 @@ def binary_tree_from_preorder_inorder(preorder, inorder):
     return binary_tree_from_preorder_inorder_helper(0, len(preorder), 0, len(inorder))
 
 
+def reconstruct_preorder(preorder):
+    """
+    Reconstruct BinaryTree from preorder traversal data
+    with blanks indicating null nodes.
+    e.g.
+    [H, B, F, NULL, NULL, E, A, NULL, NULL, NULL, C, NULL, D, NULL, G, I, NULL, NULL, NULL]
+    """
+
+    def reconstruct_preorder_helper(preorder_iter):
+        subtree_key = next(preorder_iter)
+        if subtree_key is None:
+            return None
+        
+        # Node that reconstruct_preoder_helper updates preorder_iter.
+        #so the order of the following two calls are critical
+        left_subtree = reconstruct_preorder_helper(preorder_iter)
+        right_subtree = reconstruct_preorder_helper(preorder_iter)
+        return BinaryTreeNode(subtree_key, left_subtree, right_subtree)
+    return reconstruct_preorder_helper(iter(preorder))
+
+
