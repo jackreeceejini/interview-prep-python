@@ -159,3 +159,30 @@ def find_successor(node):
     # A return value of None means node does not have a successor i.e node
     # is the rightmost node in the tree
     return node.parent 
+
+def inorder_traversal_O1space(tree):
+    """
+    O(1) space inorder traversal of a tree without
+    recursion
+    """
+    prev, result = None, []
+    while tree:
+        if prev is tree.parent:
+            # We came down to tree from prev
+            if tree.left: # keep going left
+                next = tree.left
+            else:
+                result.append(tree.data)
+                # done with left, so go right if right is not empty otherwise,
+                # go up
+                next = tree.right or tree.parent
+        elif tree.left is prev:
+            # we came up to tree from its left child
+            result.append(tree.data)
+            # done with left, so go right if right is not empty, otherwise go up
+            next = tree.right or tree.parent
+        else: # done with both children, so move up
+            next = tree.parent
+
+        prev, tree = tree, next
+    return result 
