@@ -140,5 +140,22 @@ def find_kth_node_binary_tree(tree, k):
 
     return None # if k is between 1 and the tree size, this is unreacheable
 
+def find_successor(node):
+    """
+    find the successor of a node in an inorder traversal 
+    of a tree
+    """
 
+    if node.right:
+        # successor is the leftmost element in node's right subtree
+        node = node.right
+        while node.left:
+            node = node.left
+        return node
 
+    # find the closest ancestor whose left subtree contains node
+    while node.parent and node.parent.right is node:
+        node = node.parent
+    # A return value of None means node does not have a successor i.e node
+    # is the rightmost node in the tree
+    return node.parent 
