@@ -279,3 +279,4 @@ def construct_right_sibling(tree):
     while tree and tree.left:
         populate_children_next_field(tree)
         tree = tree.left
+
