@@ -266,4 +266,16 @@ def exterior_binary_tree(tree):
     return ([tree] + left_boundary_and_leaves(tree.left, is_boundary=True)
     + right_boundary_and_leaves(tree.right, is_boundary=True) if tree else[])
 
-    
+
+def construct_right_sibling(tree):
+    def populate_children_next_field(start_node):
+        while start_node and start_node.left:
+            #populate left child's next field
+            start_node.left.next = start_node.right
+            # populate right child's next field if iter is not the last node
+            # of level
+            start_node.right.next = start_node.next and start_node.next.left
+            start_node = start_node.next
+    while tree and tree.left:
+        populate_children_next_field(tree)
+        tree = tree.left
