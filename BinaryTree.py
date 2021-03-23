@@ -239,3 +239,31 @@ def create_list_of_leaves(tree):
         return [tree]
     # first do the left subtree, and then do the right subtree
     return create_list_of_leaves(tree.left) + create_list_of_leaves(tree.right)
+
+def exterior_binary_tree(tree):
+    def is_leaf(node):
+        return not node.left and not node.right
+    # computes the nodes from the root to the leftmost leaf followed by all
+    # the leaves in subtree.
+
+    def left_boundary_and_leaves(subtree, is_boundary):
+        if not subtree:
+            return []
+        return (([subtree] if is_boundary or is_leaf(subtree) else []) + left_boundary_and_leaves(
+            subtree.left, is_boundary) + left_boundary_and_leaves(subtree.right, is_boundary and not subtree.left)
+        )
+
+    # computes the leaves in left_to_right order followed by the rightmost 
+    # leaf to the root path in subtree.
+
+    def right_boundary_and_leaves(subtree, is_boundary):
+        if not subtree:
+            return []
+        return (right_boundary_and_leaves(subtree.left, is_boundary 
+        and not subtree.right) + right_boundary_and_leaves(subtree.right, is_boundary)
+        +([subtree] if is_boundary or is_leaf(subtree) else []))
+
+    return ([tree] + left_boundary_and_leaves(tree.left, is_boundary=True)
+    + right_boundary_and_leaves(tree.right, is_boundary=True) if tree else[])
+
+    
