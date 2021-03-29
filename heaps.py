@@ -34,3 +34,22 @@ def merge_sorted_arrays(sorted_arrays):
 
 def merge_sorted_arrays_pythonic(sorted_arrays):
     return list(heapq.merge(*sorted_arrays))
+
+def sort_approximately_sorted_array(sequence, k):
+    result = []
+    min_heap = []
+
+    #adds first k elements in min_heap, stop if there are fewer than k
+    for x in itertools.islice(sequence, k):
+        heapq.heappush(min_heap, x)
+
+    #continously add element from sequence into min_heap simultaneously poping out the smallest in to result
+    for x in sequence:
+        smallest = heapq.heappushpop(min_heap, x)
+        result.append(smallest)
+    
+    while min_heap:
+        smallest = heapq.heappop(min_heap)
+        result.append(smallest)
+        
+    return result
