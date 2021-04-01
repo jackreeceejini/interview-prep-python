@@ -95,3 +95,27 @@ def online_median(sequence):
             heapq.heappush(min_heap, -heapq.heappop(max_heap))
         result.append(0.5 * (min_heap[0] + (-max_heap[0] if len(min_heap) == len(max_heap) else min_heap[0])))
         
+
+def k_largest_in_binary_heap(A, k):
+    if k <= 0:
+        return []
+
+    # stores the (-value, index) pair in candidate_max_heap. This heap is 
+    # ordered by value field. uses the negative of value to get the effect
+    # of max_heap
+    candidate_max_heap = []
+    # the largest element in A is at index 0
+    candidate_max_heap.append((-A[0], 0))
+    result = []
+    for _ in range(k):
+        candidate_idx = candidate_max_heap[0][1]
+        result.append(-heapq.heappop(candidate_max_heap)[0])
+
+        left_child_idx = 2 * candidate_idx + 1
+        if left_child_idx < len(A):
+            heapq.heappush(candidate_max_heap, (-A[left_child_idx], left_child_idx))
+
+        right_child_idx = 2 * candidate_idx + 2 
+        if right_child_idx < len(A):
+            heapq.heappush(candidate_max_heap, (-A[right_child_idx], right_child_idx))
+
