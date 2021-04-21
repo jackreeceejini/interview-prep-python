@@ -32,8 +32,6 @@ def search_first_k(A, k):
     return result
 
 def searh_entry_equal_to_its_index(A):
-    """ Search for first occurence of k
-    """
     left, right = 0, len(A) - 1
 
     while left <= right:
