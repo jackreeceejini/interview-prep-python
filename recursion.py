@@ -1,3 +1,5 @@
+import math
+
 NUM_PEGS = 3
 
 def compute_tower_hanoi(num_rings):
@@ -14,5 +16,22 @@ def compute_tower_hanoi(num_rings):
     compute_tower_hanoi_steps(num_rings, 0, 1, 2)
     return result
 
+
+def generate_power_set(S):
+    power_set = []
+    for int_for_subset in range(1 << len(S)):
+        bit_array = int_for_subset
+        subset = []
+        while bit_array:
+            subset.append(int(math.log2(bit_array & ~(bit_array - 1))))
+            bit_array &= bit_array - 1
+        power_set.append(subset)
+    return power_set
+
+
+
+
 if __name__ == "__main__":
-    print(compute_tower_hanoi(3))
+    import operator as o
+    it = o.itemgetter
+    print([it(*index)([1,2,3]) for index in generate_power_set([1,2,3])[1:]])
